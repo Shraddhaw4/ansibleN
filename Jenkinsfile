@@ -13,7 +13,7 @@ pipeline {
           steps {
               // credentialsId loading private key and storing in var
               withCredentials([sshUserPrivateKey(
-                  credentialsId: 'PRI_KEY',
+                  credentialsId: 'AWS_privatekey',
                   keyFileVariable: 'SSH_KEY')])
               {
                   sh 'cp "$SSH_KEY" /var/tmp/Jenkins-Server.pem'

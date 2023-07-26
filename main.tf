@@ -6,21 +6,21 @@ provider "aws" {
 resource "null_resource" "key" {
   provisioner "local-exec" {
     on_failure  = fail
-    command = "sudo cp /var/tmp/Jenkins-Server.pem /home/ubuntu/.ssh/Jenkins-Server.pem"
+    command = "sudo cp /var/tmp/Demo_ans_key.pem /home/ubuntu/.ssh/Demo_ans_key.pem"
   }
 }
 resource "null_resource" "key-ownership" {
   depends_on = [null_resource.key]
   provisioner "local-exec" {
     on_failure  = fail
-    command = "sudo chown ubuntu:ubuntu /home/ubuntu/.ssh/Jenkins-Server.pem"
+    command = "sudo chown ubuntu:ubuntu /home/ubuntu/.ssh/Demo_ans_key.pem"
   }
 }
 resource "null_resource" "Transfer_ssh1" {
   depends_on = [null_resource.key]
   provisioner "local-exec" {
     on_failure = fail
-    command = "sudo echo 'Host *\n\tStrictHostKeyChecking no\n\tUser ubuntu\n\tIdentityFile /home/ubuntu/.ssh/Jenkins-Server.pem' > config"
+    command = "sudo echo 'Host *\n\tStrictHostKeyChecking no\n\tUser ubuntu\n\tIdentityFile /home/ubuntu/.ssh/Demo_ans_key.pem' > config"
   }
 }
 resource "null_resource" "Transfer_ssh2" {
@@ -54,7 +54,7 @@ data "aws_ami" "ubuntu-ami" {
 resource "aws_instance" "ansible-hosts" {
   ami = data.aws_ami.ubuntu-ami.id
   instance_type = "t2.micro"
-  key_name = "Jenkins-Server"
+  key_name = "Demo_ans_key"
 
   tags = {
     Name = "terr-ansible-host"

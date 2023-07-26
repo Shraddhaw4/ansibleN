@@ -9,13 +9,6 @@ resource "null_resource" "key" {
     command = "sudo cp /var/tmp/Demo_ans_key.pem /home/ubuntu/.ssh/Demo_ans_key.pem"
   }
 }
-resource "null_resource" "key-ownership" {
-  depends_on = [null_resource.key]
-  provisioner "local-exec" {
-    on_failure  = fail
-    command = "sudo chown ubuntu:ubuntu /home/ubuntu/.ssh/Demo_ans_key.pem"
-  }
-}
 resource "null_resource" "Transfer_ssh1" {
   depends_on = [null_resource.key]
   provisioner "local-exec" {

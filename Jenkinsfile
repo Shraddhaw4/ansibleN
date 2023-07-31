@@ -16,6 +16,7 @@ pipeline {
                   credentialsId: 'AWS_privatekey_1',
                   keyFileVariable: 'SSH_KEY')])
               {
+                  sh 'sudo su - ubuntu'                
                   sh 'sudo cp "$SSH_KEY" /var/tmp/newkey.pem'
               }
           }

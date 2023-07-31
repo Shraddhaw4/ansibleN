@@ -5,7 +5,7 @@ pipeline {
   environment {
           AWS_ACCESS_KEY_ID     = credentials('AWS_credentials')
           AWS_SECRET_ACCESS_KEY = credentials('AWS_credentials')
-          PRI_KEY = credentials('AWS_privatekey')
+          PRI_KEY = credentials('AWS_privatekey_1')
       }
     agent  any
     stages {
@@ -13,10 +13,10 @@ pipeline {
           steps {
               // credentialsId loading private key and storing in var
               withCredentials([sshUserPrivateKey(
-                  credentialsId: 'AWS_privatekey',
+                  credentialsId: 'AWS_privatekey_1',
                   keyFileVariable: 'SSH_KEY')])
               {
-                  sh 'cp "$SSH_KEY" /var/tmp/Demo_ans_key.pem'
+                  sh 'cp "$SSH_KEY" /var/tmp/newkey.pem'
               }
           }
       }

@@ -59,5 +59,10 @@ pipeline {
                 sh "pwd;cd terraform/ ; terraform apply -input=false tfplan"
             }
         }
+      stage('Run Ansible') {
+      steps {
+        ansiblePlaybook(credentialsId: 'AWS_privatekey_1	', inventory: 'inventory', playbook: 'terraform/playbook.yml')
+      }
+    }
     }
 }
